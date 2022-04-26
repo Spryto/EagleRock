@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>7863e245-1c25-4e26-a10b-cfc5aeb907b8</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>.</DockerfileContext>
+    <AssemblyName>EagleRock</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.3.0" />
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.2.0" />
+    <PackageReference Include="AutofacSerilogIntegration" Version="5.0.0" />
+    <PackageReference Include="Geo" Version="1.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EagleRock.Storage\EagleRock.Cache.csproj" />
+    <ProjectReference Include="..\EagleRock.Web.Api\EagleRock.Web.Api.csproj" />
+    <ProjectReference Include="..\EagleRock.EagleBot.Api\EagleRock.EagleBot.Api.csproj" />
+    <ProjectReference Include="..\EagleRock.Web.Data\EagleRock.Web.Data.csproj" />
+    <ProjectReference Include="..\EagleRock.Infrastructure\EagleRock.Infrastructure.csproj" />
+  </ItemGroup>
+
+
+</Project>
