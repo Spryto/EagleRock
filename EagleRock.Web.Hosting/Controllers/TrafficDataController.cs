@@ -54,7 +54,7 @@ namespace EagleRock.Controllers
             await _mediator.Command<SubmitTrafficDataCommand>(command, token);
         }
 
-        private static TrafficDirection TryParseDirection(EagleBotDataRecord record)
+        public static TrafficDirection TryParseDirection(EagleBotDataRecord record)
         {
             object direction;
             if (Enum.TryParse(typeof(TrafficDirection), record.TrafficDirection, true, out direction))
