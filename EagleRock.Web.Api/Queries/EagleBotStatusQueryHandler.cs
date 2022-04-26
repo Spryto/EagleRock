@@ -1,6 +1,9 @@
-﻿using EagleRock.Infrastructure;
+﻿using EagleRock.EagleBot.Data.Traffic;
+using EagleRock.Infrastructure;
+using EagleRock.Infrastructure.Storage;
 using EagleRock.Web.Api.Data;
-using System.Collections.Generic;
+using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,22 +11,50 @@ namespace EagleRock.Web.Api.Queries
 {
     sealed class EagleBotStatusQueryHandler : IQueryHandler<EagleBotStatusQuery, EagleBotStatusQueryResponse>
     {
+        private IStorageProvider storageProvider;
+
+        public EagleBotStatusQueryHandler(IStorageProvider _storageProvider)
+        {
+            storageProvider = _storageProvider;
+        }
+
         public async Task<EagleBotStatusQueryResponse> HandleAsync(EagleBotStatusQuery query, CancellationToken token)
         {
-            var fake1 = new EagleBotStatus
+            // TODO remove hard-coded redis namespacing
+            var allStatuses = storageProvider.ReadAllValues<BotData>("EagleBot:Record");
+            var botStatuses = allStatuses.Select(Status).ToList();
+            return new EagleBotStatusQueryResponse { BotStatuses = botStatuses };
+        }
+
+        private static EagleBotStatus Status(BotData data)
+        {
+            return new EagleBotStatus
             {
-                Description = "one"
+                EagleBotId = data.EagleBotId,
+                Location = data.CurrentLocation,
+                Status = StatusDescription(data.DataRecordedAt),
+                Traffic = data.TrafficData
             };
-            var fake2 = new EagleBotStatus
+        }
+
+        private static string StatusDescription(DateTimeOffset timeRecorded)
+        {
+            if (DateTime.UtcNow.Subtract(TimeSpan.FromMinutes(2)) > timeRecorded)
             {
-                Description = "two"
-            };
-            var fake3 = new EagleBotStatus
+                return "Online";
+            }
+
+            if (DateTime.UtcNow.Subtract(TimeSpan.FromMinutes(15)) > timeRecorded)
             {
-                Description = "three"
-            };
-            var fakes = new List<EagleBotStatus>() { fake1, fake2, fake3 };
-            return new EagleBotStatusQueryResponse { BotStatuses = fakes };
+                return "Recent Data";
+            }
+
+            if (DateTime.UtcNow.Subtract(TimeSpan.FromMinutes(60)) > timeRecorded)
+            {
+                return "Disconnected";
+            }
+
+            return "Serious Issue";
         }
     }
 }

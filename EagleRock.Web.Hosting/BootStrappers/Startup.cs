@@ -26,6 +26,11 @@ namespace EagleRock
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            //services.AddSingleton<IRedisCacheService, RedisCacheService>();
+            //services.AddStackExchangeRedisCache(options =>
+            //{
+            //    options.Configuration = $"{Configuration.GetValue<string>("RedisCache:Host")}:{Configuration.GetValue<int>("RedisCache:Port")}";
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

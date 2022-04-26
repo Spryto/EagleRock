@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EagleRock.EagleBot.Data\EagleRock.EagleBot.Data.csproj" />
     <ProjectReference Include="..\EagleRock.Web.Data\EagleRock.Web.Data.csproj" />
     <ProjectReference Include="..\EagleRock.Infrastructure\EagleRock.Infrastructure.csproj" />
   </ItemGroup>

@@ -1,8 +1,8 @@
-﻿namespace EagleRock.Api.Data.Traffic
+﻿namespace EagleRock.EagleBot.Data.Traffic
 {
     public class GPSCoordinate
     {
-        string Latitude { get; set; }
-        string Longitude { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
     }
 }

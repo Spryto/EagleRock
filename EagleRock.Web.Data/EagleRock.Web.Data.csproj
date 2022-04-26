@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EagleRock.EagleBot.Data\EagleRock.EagleBot.Data.csproj" />
+  </ItemGroup>
+
 </Project>
